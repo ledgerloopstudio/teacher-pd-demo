@@ -110,7 +110,7 @@ textarea{min-height:60px;resize:vertical}
 <div class="top">
   <div class="brand"><span class="dot"></span><span>Teacher PD &amp; Renewal Tracker<small>LEDGERLOOPSTUDIO</small></span></div>
   <div class="tabs" id="tabs"></div>
-  <button class="tab" data-dark="1">☾ Dark</button>
+  <button class="tab" data-toggledark="1">☾ Dark</button>
 </div>
 <div class="wrap" id="app"></div>
 
@@ -1204,7 +1204,7 @@ document.addEventListener("click", function (ev) {
   };
 
   if (g("data-tab")) { VIEW = g("data-tab"); MODAL = null; EDIT = null; render(); return; }
-  if (g("data-dark")) {
+  if (g("data-toggledark")) {
     STATE.settings.dark = STATE.settings.dark === "1" ? "0" : "1";
     document.documentElement.setAttribute("data-dark", STATE.settings.dark);
     save(); render(); return;
