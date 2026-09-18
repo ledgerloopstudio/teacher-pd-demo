@@ -104,29 +104,31 @@ textarea{min-height:60px;resize:vertical}
 .demo-banner .x{position:absolute;right:10px;top:6px;background:none;border:none;color:#fff;font:inherit;cursor:pointer;opacity:.85;padding:4px 8px}
 .demo-banner .x:hover{opacity:1}
 @media print{.demo-banner{display:none!important}}
+.buildstamp{max-width:1180px;margin:0 auto;padding:4px 22px 30px;color:#8A9AA5;font-size:11px;letter-spacing:.04em;text-align:right}
 </style></head>
 <body>
-<div class="demo-banner" id="demoBanner">DEMO — example data, add up to 15 of your own PD activities and see whether it thinks the way you do. Nothing is saved permanently and it can reset any time. <a href="https://www.etsy.com/shop/LedgerLoopStudio" target="_blank" rel="noopener">Buy the full version</a> for your own unlimited, permanent copy.<button class="x" onclick="document.getElementById('demoBanner').style.display='none'" aria-label="Dismiss">✕</button></div>
+<div class="demo-banner" id="demoBanner">DEMO â example data, add up to 15 of your own PD activities and see whether it thinks the way you do. Nothing is saved permanently and it can reset any time. <a href="https://www.etsy.com/shop/LedgerLoopStudio" target="_blank" rel="noopener">Buy the full version</a> for your own unlimited, permanent copy.<button class="x" onclick="document.getElementById('demoBanner').style.display='none'" aria-label="Dismiss">â</button></div>
 <div class="top">
   <div class="brand"><span class="dot"></span><span>Teacher PD &amp; Renewal Tracker<small>LEDGERLOOPSTUDIO</small></span></div>
   <div class="tabs" id="tabs"></div>
-  <button class="tab" data-toggledark="1">☾ Dark</button>
+  <button class="tab" data-toggledark="1">â¾ Dark</button>
 </div>
 <div class="wrap" id="app"></div>
+<div class="buildstamp noprint">Teacher PD &amp; Certification Renewal Tracker &middot; build 2026-09-18 &middot; LedgerLoopStudio</div>
 
 <script id="logic">
 /* ============================================================================
-   PURE LOGIC — no DOM. Plain data in, plain data out, unit-testable.
+   PURE LOGIC â no DOM. Plain data in, plain data out, unit-testable.
 
    THE HARD PROBLEM THIS SOLVES: professional development is recorded in three
-   different units — clock hours, CEUs and college credits — and boards state
+   different units â clock hours, CEUs and college credits â and boards state
    their requirement in only one of them. Every activity is converted to a
    single base unit using conversion factors YOU set, so one total is always
    correct no matter how each course was awarded.
    ========================================================================== */
 
 /* ---------------------------------------------------------------------------
-   CONFIGURATION — EDIT FREELY. Renewal requirements, cycle lengths, accepted
+   CONFIGURATION â EDIT FREELY. Renewal requirements, cycle lengths, accepted
    categories and unit conversions are set by your own state or district, differ
    by licence and endorsement, and change. Nothing below states any authority's
    current rules. Confirm every figure against your own renewal page.
@@ -134,7 +136,7 @@ textarea{min-height:60px;resize:vertical}
    --------------------------------------------------------------------------- */
 var CRITERIA_REVIEWED = "2026-09-17";
 
-/* The 50 states plus DC. Names only — the numbers are yours to enter. */
+/* The 50 states plus DC. Names only â the numbers are yours to enter. */
 var STATES = [
   "Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware",
   "District of Columbia","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa",
@@ -323,7 +325,7 @@ function licenceStatus(licence, activities, conversions, todayISOstr) {
   };
 }
 
-/* MONTHLY COMPLETION PLANNER — how many hours a month, and the safe finish date. */
+/* MONTHLY COMPLETION PLANNER â how many hours a month, and the safe finish date. */
 function completionPlan(status, todayISOstr, bufferDays) {
   var buffer = bufferDays === undefined ? 30 : bufferDays;
   if (status.remaining <= 0) {
@@ -352,7 +354,7 @@ function completionPlan(status, todayISOstr, bufferDays) {
   };
 }
 
-/* AUDIT & PROOF CHECKLIST — a traffic-light readiness score. */
+/* AUDIT & PROOF CHECKLIST â a traffic-light readiness score. */
 function auditChecklist(licences, activities, conversions, todayISOstr) {
   var items = [];
   var push = function (label, ok, detail) { items.push({ label: label, ok: ok, detail: detail }); };
@@ -405,7 +407,7 @@ function renewalCalendar(licences, todayISOstr) {
   for (var i = 0; i < licences.length; i++) {
     var L = licences[i];
     var exp = L.expiry || addMonths(L.cycleStart, num(L.cycleMonths));
-    items.push({ id: L.id, label: L.name, detail: L.state + (L.number ? " · " + L.number : ""),
+    items.push({ id: L.id, label: L.name, detail: L.state + (L.number ? " Â· " + L.number : ""),
                  date: exp, daysLeft: daysUntil(todayISOstr, exp) });
   }
   items.sort(function (a, b) {
@@ -450,7 +452,7 @@ var DEMO_MODE = true, DEMO_ACTIVITY_LIMIT = 28; /* 13 seeded + 15 room to try ad
 function demoLimitReached(){
   if(!DEMO_MODE) return false;
   if(!STATE.activities || STATE.activities.length < DEMO_ACTIVITY_LIMIT) return false;
-  alert("You've reached the "+DEMO_ACTIVITY_LIMIT+"-entry demo limit.\n\nThis is just a preview — buy the full version for unlimited entries, all features unlocked, and your own permanent copy.");
+  alert("You've reached the "+DEMO_ACTIVITY_LIMIT+"-entry demo limit.\n\nThis is just a preview â buy the full version for unlimited entries, all features unlocked, and your own permanent copy.");
   return true;
 }
 
@@ -524,7 +526,7 @@ function seed() {
     conversions: { clockHour: 1, ceu: 10, semesterCredit: 15, quarterCredit: 10 },
     district: {
       hrContact: "Renewals Office", hrEmail: "renewals@example.org",
-      portal: "district portal → Professional Learning → Renewal",
+      portal: "district portal â Professional Learning â Renewal",
       deadline: fwd(28, 1),
       requirements: "Certificates uploaded as PDF. Course titles must match the certificate exactly.",
       notes: "District approval is required before hours are forwarded to the state."
@@ -565,7 +567,7 @@ function licenceById(id) {
 }
 function licenceLabel(id) {
   var L = licenceById(id);
-  return L ? L.name : "—";
+  return L ? L.name : "â";
 }
 function catOptions(sel) {
   var out = "";
@@ -584,7 +586,7 @@ function unitOptions(sel) {
   return out;
 }
 function stateOptions(sel) {
-  var out = el("option", { value: "" }, "— choose —");
+  var out = el("option", { value: "" }, "â choose â");
   for (var i = 0; i < STATES.length; i++) {
     out += el("option", { value: STATES[i], selected: STATES[i] === sel ? "selected" : null }, esc(STATES[i]));
   }
@@ -648,7 +650,7 @@ function viewDash() {
       el("div", { "class": "note" }, ov.score + "% fully complete")) +
     el("div", { "class": "card" },
       el("h3", {}, "Days to next renewal") +
-      el("div", { "class": "kpi gold" }, next ? next.daysLeft : "—") +
+      el("div", { "class": "kpi gold" }, next ? next.daysLeft : "â") +
       el("div", { "class": "note" }, next ? esc(next.label) : "Nothing scheduled")) +
     el("div", { "class": "card" },
       el("h3", {}, "Hours without proof") +
@@ -721,7 +723,7 @@ function viewPD() {
       : (a.submission === "rejected" ? "bad" : (a.submission === "submitted" ? "blue" : ""));
     return el("tr", {},
       el("td", {}, esc(a.date)) +
-      el("td", {}, esc(a.title || "—") + (a.provider ? el("div", { "class": "note" }, esc(a.provider)) : "")) +
+      el("td", {}, esc(a.title || "â") + (a.provider ? el("div", { "class": "note" }, esc(a.provider)) : "")) +
       el("td", {}, esc(catLabel(a.category))) +
       el("td", {}, round1(num(a.amount)) + " " + esc(unitLabel(a.unit))) +
       el("td", {}, el("b", {}, ch)) +
@@ -740,7 +742,7 @@ function viewPD() {
     el("div", { "class": "row", style: "margin-bottom:12px" },
       el("button", { "class": "btn pri", "data-new-a": "1" }, "+ Add activity") +
       el("span", { "class": "note" },
-        STATE.activities.length + " activities · " +
+        STATE.activities.length + " activities Â· " +
         sumClockHours(STATE.activities, STATE.conversions) + " clock hours in total")) +
     body;
 }
@@ -754,12 +756,12 @@ function viewLicences() {
     var s = licenceStatus(L, STATE.activities, STATE.conversions, todayISO());
     return el("tr", {},
       el("td", {}, esc(L.name) + (L.notes ? el("div", { "class": "note" }, esc(L.notes)) : "")) +
-      el("td", {}, esc(L.state || "—")) +
-      el("td", {}, esc(L.number || "—")) +
-      el("td", {}, L.cycleMonths + " mo" + el("div", { "class": "note" }, esc(s.cycleStart) + " →")) +
+      el("td", {}, esc(L.state || "â")) +
+      el("td", {}, esc(L.number || "â")) +
+      el("td", {}, L.cycleMonths + " mo" + el("div", { "class": "note" }, esc(s.cycleStart) + " â")) +
       el("td", {}, L.requiredHours + " h") +
       el("td", {}, s.logged + " h" + el("div", { "class": "note" }, s.entries + " activities")) +
-      el("td", {}, esc(s.expiry || "—")) +
+      el("td", {}, esc(s.expiry || "â")) +
       el("td", {}, statusPill(s)) +
       el("td", { style: "text-align:right;white-space:nowrap" },
         el("button", { "class": "btn sm", "data-edit-l": L.id }, "Edit") + " " +
@@ -767,7 +769,7 @@ function viewLicences() {
   }, "Add your teaching certificate.", head);
 
   return el("h2", {}, "Licences") +
-    el("div", { "class": "sub" }, "Base certificate, supplementals and endorsements — each with its own hour target.") +
+    el("div", { "class": "sub" }, "Base certificate, supplementals and endorsements â each with its own hour target.") +
     el("div", { "class": "row", style: "margin-bottom:12px" },
       el("button", { "class": "btn pri", "data-new-l": "1" }, "+ Add certificate")) +
     body;
@@ -779,7 +781,7 @@ function viewRequirements() {
     el("h3", {}, "Unit conversions") +
     el("p", { "class": "hint" },
       "Everything is totalled in clock hours. These factors say what one of each unit is worth. " +
-      "Defaults are the common values — change them if your state says otherwise.") +
+      "Defaults are the common values â change them if your state says otherwise.") +
     el("div", { "class": "fgrid" },
       el("div", {}, el("label", {}, "1 clock hour =") + el("input", { id: "cvClock", type: "number", step: "0.1", min: "0", value: esc(c.clockHour) }, "")) +
       el("div", {}, el("label", {}, "1 CEU =") + el("input", { id: "cvCeu", type: "number", step: "0.1", min: "0", value: esc(c.ceu) }, "")) +
@@ -812,7 +814,7 @@ function viewRequirements() {
             el("th", { style: "text-align:right" }, "Status") + el("th", {}, "")) + rows))
       : el("div", { "class": "empty" }, "No category minimums set for this certificate.");
     cards += el("div", { "class": "card" },
-      el("h3", {}, esc(L.name) + " — " + esc(L.state || "")) + table +
+      el("h3", {}, esc(L.name) + " â " + esc(L.state || "")) + table +
       el("div", { "class": "row", style: "margin-top:10px" },
         el("select", { id: "cm_" + L.id, style: "max-width:250px" }, catOptions("")) +
         el("input", { id: "cmh_" + L.id, type: "number", step: "0.5", min: "0",
@@ -846,7 +848,7 @@ function viewDistrict() {
     var cls = a.submission === "rejected" ? "bad" : (a.submission === "ready" ? "amber" : "");
     return el("tr", {},
       el("td", {}, esc(a.date)) +
-      el("td", {}, esc(a.title || "—") + el("div", { "class": "note" }, esc(a.provider || ""))) +
+      el("td", {}, esc(a.title || "â") + el("div", { "class": "note" }, esc(a.provider || ""))) +
       el("td", {}, toClockHours(a, STATE.conversions)) +
       el("td", {}, a.certificate === "1"
         ? el("span", { "class": "pill good" }, "On file")
@@ -872,7 +874,7 @@ function viewDistrict() {
         deadlineDays < 0 ? Math.abs(deadlineDays) + " days overdue" : deadlineDays + " days to the district deadline"))));
 
   return el("h2", {}, "District") +
-    el("div", { "class": "sub" }, "Who to send it to, where, by when — and what is still sitting in the queue.") +
+    el("div", { "class": "sub" }, "Who to send it to, where, by when â and what is still sitting in the queue.") +
     el("div", { "class": "grid g2" }, form +
       el("div", { "class": "card" },
         el("h3", {}, "Submission status") +
@@ -901,8 +903,8 @@ function viewVault() {
   var body = listCard("Certificate vault", rows, function (a) {
     return el("tr", {},
       el("td", {}, esc(a.date)) +
-      el("td", {}, esc(a.title || "—")) +
-      el("td", {}, esc(a.provider || "—")) +
+      el("td", {}, esc(a.title || "â")) +
+      el("td", {}, esc(a.provider || "â")) +
       el("td", {}, toClockHours(a, STATE.conversions)) +
       el("td", {}, a.certificate === "1"
         ? el("span", { "class": "pill good" }, "On file")
@@ -940,12 +942,12 @@ function viewPlan() {
       body = el("div", { "class": "kpi bad" }, "Too late to pace") +
         el("div", { "class": "note" }, s.remaining + " hours still needed with under a month of buffer left.");
     } else if (plan.perMonth === null) {
-      body = el("div", { "class": "kpi" }, "—") + el("div", { "class": "note" }, "Set an expiry date on this certificate.");
+      body = el("div", { "class": "kpi" }, "â") + el("div", { "class": "note" }, "Set an expiry date on this certificate.");
     } else {
       body = el("div", { "class": "kpi " + (plan.perMonth > 12 ? "warn" : "") }, plan.perMonth + " h") +
         el("div", { "class": "note" },
-          "per month · " + s.remaining + " hours left · " + plan.monthsAvailable +
-          " months of usable time · safe finish " + esc(plan.safeFinishISO));
+          "per month Â· " + s.remaining + " hours left Â· " + plan.monthsAvailable +
+          " months of usable time Â· safe finish " + esc(plan.safeFinishISO));
     }
     cards += el("div", { "class": "card" },
       el("h3", {}, esc(L.name)) + body +
@@ -1014,11 +1016,11 @@ function viewAudit() {
     for (var k = 0; k < acts.length; k++) {
       aRows += el("tr", {},
         el("td", {}, esc(acts[k].date)) +
-        el("td", {}, esc(acts[k].title || "—")) +
+        el("td", {}, esc(acts[k].title || "â")) +
         el("td", {}, esc(catLabel(acts[k].category))) +
         el("td", {}, round1(num(acts[k].amount)) + " " + esc(unitLabel(acts[k].unit))) +
         el("td", {}, toClockHours(acts[k], STATE.conversions)) +
-        el("td", {}, esc(acts[k].provider || "—")) +
+        el("td", {}, esc(acts[k].provider || "â")) +
         el("td", {}, acts[k].certificate === "1" ? "Yes" : "No"));
     }
     var cRows = "";
@@ -1040,16 +1042,16 @@ function viewAudit() {
       el("div", { "class": "sheetprint", id: "packSheet" },
         el("h4", {}, "Professional Development Record") +
         el("div", { "class": "psub" },
-          esc(STATE.profile.name || "—") +
-          (STATE.profile.school ? " · " + esc(STATE.profile.school) : "") +
-          (STATE.profile.district ? " · " + esc(STATE.profile.district) : "") +
-          " · prepared " + esc(todayISO())) +
+          esc(STATE.profile.name || "â") +
+          (STATE.profile.school ? " Â· " + esc(STATE.profile.school) : "") +
+          (STATE.profile.district ? " Â· " + esc(STATE.profile.district) : "") +
+          " Â· prepared " + esc(todayISO())) +
         el("table", {},
           el("tr", {}, el("th", {}, "Certificate") + el("td", {}, esc(L.name))) +
-          el("tr", {}, el("th", {}, "State") + el("td", {}, esc(L.state || "—"))) +
-          el("tr", {}, el("th", {}, "Number") + el("td", {}, esc(L.number || "—"))) +
+          el("tr", {}, el("th", {}, "State") + el("td", {}, esc(L.state || "â"))) +
+          el("tr", {}, el("th", {}, "Number") + el("td", {}, esc(L.number || "â"))) +
           el("tr", {}, el("th", {}, "Renewal cycle") + el("td", {}, esc(s.cycleStart) + " to " + esc(s.cycleEnd))) +
-          el("tr", {}, el("th", {}, "Expires") + el("td", {}, esc(s.expiry || "—"))) +
+          el("tr", {}, el("th", {}, "Expires") + el("td", {}, esc(s.expiry || "â"))) +
           el("tr", {}, el("th", {}, "Hours required") + el("td", {}, s.need)) +
           el("tr", {}, el("th", {}, "Hours logged") + el("td", {}, s.logged)) +
           el("tr", {}, el("th", {}, "Hours with a certificate") + el("td", {}, s.verified))) +
@@ -1069,7 +1071,7 @@ function viewAudit() {
       el("div", { "class": "card" },
         el("h3", {}, "Readiness") +
         el("div", { "class": "kpi" }, el("span", { "class": "lamp " + audit.lamp }, "") + audit.score + "%") +
-        el("div", { "class": "note" }, esc(audit.verdict) + " · " + audit.ok + " of " + audit.total + " checks pass") +
+        el("div", { "class": "note" }, esc(audit.verdict) + " Â· " + audit.ok + " of " + audit.total + " checks pass") +
         el("div", { style: "height:10px" }, "") +
         el("div", { "class": "tblwrap" }, el("table", {}, rows))) +
       el("div", { "class": "card" },
@@ -1083,7 +1085,7 @@ function viewAudit() {
         el("input", { type: "file", id: "importFile", accept: ".json", style: "display:none" }, "") +
         el("div", { style: "height:12px" }, "") +
         el("div", { "class": "note" },
-          ov.ready + " of " + ov.total + " certificates fully ready · " +
+          ov.ready + " of " + ov.total + " certificates fully ready Â· " +
           sumClockHours(STATE.activities, STATE.conversions) + " clock hours logged in total"))) +
     sheet;
 }
